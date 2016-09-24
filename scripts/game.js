@@ -32,7 +32,7 @@ firstLevel.mapInArray =
 // let box = new Square(firstLevel, 400, 400, 40, 20);
 
 let hero = new Unit(firstLevel, 'sprites/angel.png', 100, 100, 3);
-hero.animations = 'sprites/angelRun.png';
+hero.animations = 'sprites/angelrun.png';
 let Amy = new Unit(firstLevel, 'sprites/man.png', 520, 100, 2);
 let Rory = new Unit(firstLevel, 'sprites/man.png', 640, 100, 2);
 let Doctor = new Unit(firstLevel, 'sprites/man.png', 100, 300, 2);
