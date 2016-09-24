@@ -42,12 +42,13 @@ let Man2 = new Unit(firstLevel, 'sprites/man.png', 545, 365);
 // game loop
 
 firstLevel.addUnit(hero);
-// firstLevel.start();
 firstLevel.addUnit(Amy);
 firstLevel.addUnit(Rory);
 firstLevel.addUnit(Doctor);
 firstLevel.addUnit(Man1);
 firstLevel.addUnit(Man2);
+
+firstLevel.start();
 
 let rnd = Math.floor(Math.random() * 4);
 Amy.turnRight(rnd * 90);
@@ -61,7 +62,7 @@ rnd = Math.floor(Math.random() * 4);
 Man2.turnRight(rnd * 90);
 
 
-// firstLevel.start();
+firstLevel.start();
 let goalLabel = document.getElementById('goal');
 
 let gameLoop = setInterval(() => {
