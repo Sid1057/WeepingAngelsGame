@@ -24,12 +24,49 @@ firstLevel.mapInArray =
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
-// let box0 = new Square(firstLevel, 40, 200);
-// let box1 = new Square(firstLevel, 160, 100, 32, 64);
-// let box2 = new Square(firstLevel, 700, 160);
-// let box3 = new Square(firstLevel, 400, 16, 32, 800);
+class Game {
+  constructor(levels, fps = 60) {
+    this.levels = levels;
+    this.frameTime = 16;
+    this.leftColumn = document.getElementById('left-column');
+    this.rightColumn = document.getElementById('right-column');
+    this.currentLevel = this.levels;
+    this.previousScore = -1;
+    this.lastStepComplete = true;
+  }  
 
-// let box = new Square(firstLevel, 400, 400, 40, 20);
+  start() {
+    // this.currentLevel.fullRender();
+  }
+
+  get currentScore() {
+    return this.currentLevel.score;
+  }
+
+  sendMessage(msg, color = 'red') {
+    this.leftColumn.style.color = color;
+    this.leftColumn.innerHTML = msg;
+    console.log(msg);
+  }
+
+  gameLoop() {
+    let gameLoopVar = setInterval(() => {
+      this.currentLevel.render();
+      if (this.currentScore != this.previousScore) {
+        game.sendMessage(`Goal:<br>Find ${5 - game.currentScore} man(s) on the map and touch to kill them.<br>\
+                  You can not move when mans see you`, 'grey');
+        this.previousScore = this.currentScore;
+      }
+      if (this.currentLevel.score === 5) {
+        clearInterval(gameLoopVar);
+        this.sendMessage('Win');
+      } else if (this.currentLevel.score === -1) {
+        clearInterval(gameLoopVar);
+        this.sendMessage('Lose');
+      }
+    }, this.frameTime);
+  }
+}
 
 let hero = new Unit(firstLevel, 'sprites/angel.png', 100, 100, 3);
 hero.animations = 'sprites/angelrun.png';
@@ -63,22 +100,9 @@ Man2.turnRight(rnd * 90);
 
 
 firstLevel.start();
-let goalLabel = document.getElementById('goal');
 
-let gameLoop = setInterval(() => {
-  firstLevel.render();
-  if (firstLevel.score === 5) {
-    clearInterval(gameLoop);
-    goalLabel.style.color = 'red';
-    goalLabel.innerHTML = 'You\'re winner';
-    console.log('You\'re winner');
-  } else if (firstLevel.score === -1) {
-    clearInterval(gameLoop);
-    goalLabel.innerHTML = 'You\'re loser';
-    console.log('You\'re loser');
-  }
-}, 16);
-
-// setTimeout(() => {
-//   clearInterval(gameLoop);
-// }, 3000);
+let game = new Game(firstLevel);
+game.sendMessage(`Goal:<br>Find ${5 - game.currentScore} mans on the map and touch to kill them.<br>\
+                  You can\'t move when mans see you`, 'grey');
+game.start();
+game.gameLoop();

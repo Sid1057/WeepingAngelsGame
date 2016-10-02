@@ -110,7 +110,7 @@ class LevelMap {
   render() {
     // magic about background render
     if (this.renderStep < 5) {
-      console.log('rendering');
+      console.log('rendering')
       this.context.drawImage(this.background, 0, 0);
     }
     
